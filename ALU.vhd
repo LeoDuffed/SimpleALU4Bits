@@ -29,18 +29,18 @@ architecture behavior of ALU is
 	signal AorB: std_logic_vector(3 downto 0);
 	signal AandB: std_logic_vector(3 downto 0);  
 	signal CarryRestUno, CarryRestDos, CarrySum: std_logic;
-	signal Snew: std_logic_vector(1 downto 0);
+	signal Snew: std_logic_vector(2 downto 0); -- Lo niego por que es activo en 0 el push button
 
 begin
 	Snew <= not S(2) & S(1 downto 0);
-	RestUno: SumRes port map(A=>B, B=>A, M=>'1', Snew=>BminusA, Co=>CarryRestUno);
-	RestDos: SumRes port map(B=>B, A=>A, M=>'1', Snew=>AminusB, Co=>CarryRestDos);
-	SumaUno: SumRes port map(A=>A, B=>B, M=>'0', Snew=>AplusB, Co=>CarrySum);
+	RestUno: SumRes port map(A=>B, B=>A, M=>'1', S=>BminusA, Co=>CarryRestUno);
+	RestDos: SumRes port map(B=>B, A=>A, M=>'1', S=>AminusB, Co=>CarryRestDos);
+	SumaUno: SumRes port map(A=>A, B=>B, M=>'0', S=>AplusB, Co=>CarrySum);
 	AxorB <= A xor B;
 	AorB <= A or B;
 	AandB <= A and B;
 	
-
+	-- Para simular usar "S", irl "Snew"
 	with S select
 		F <= "0000" when "000",
 			BminusA when "001",
