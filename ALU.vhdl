@@ -22,23 +22,26 @@ architecture behavior of ALU is
 		);
 	end component;
 
-	signal BminusA: std_logic_vector(3 downto 0); -- Resultado de 4 bits
-	signal AminusB: std_logic_vector(3 downto 0); -- Resultado de 4 bits
-	signal AplusB: std_logic_vector(3 downto 0); -- Resultado de 4 bits
-	signal AxorB: std_logic_vector(3 downto 0); -- Resultado de 4 bits
-	signal AorB: std_logic_vector(3 downto 0); -- Resultado de 4 bits
-	signal AandB: std_logic_vector(3 downto 0); -- Resultado de 4 bits
+	signal BminusA: std_logic_vector(3 downto 0);
+	signal AminusB: std_logic_vector(3 downto 0);
+	signal AplusB: std_logic_vector(3 downto 0);
+	signal AxorB: std_logic_vector(3 downto 0);
+	signal AorB: std_logic_vector(3 downto 0);
+	signal AandB: std_logic_vector(3 downto 0);  
 	signal CarryRestUno, CarryRestDos, CarrySum: std_logic;
+	signal Snew: std_logic_vector(1 downto 0);
 
 begin
-	RestUno: SumRes port map(A=>B, B=>A, M=>'1', S=>BminusA, Co=>CarryRestUno); -- Resta uno B - A -> (M = 1)
-	RestDos: SumRes port map(B=>B, A=>A, M=>'1', S=>AminusB, Co=>CarryRestDos); -- Resta dos A - B -> (M = 1)
-	SumaUno: SumRes port map(A=>A, B=>B, M=>'0', S=>AplusB, Co=>CarrySum); -- Suma A + B -> (M = 0)
+	Snew <= not S(2) & S(1 downto 0);
+	RestUno: SumRes port map(A=>B, B=>A, M=>'1', Snew=>BminusA, Co=>CarryRestUno);
+	RestDos: SumRes port map(B=>B, A=>A, M=>'1', Snew=>AminusB, Co=>CarryRestDos);
+	SumaUno: SumRes port map(A=>A, B=>B, M=>'0', Snew=>AplusB, Co=>CarrySum);
 	AxorB <= A xor B;
 	AorB <= A or B;
 	AandB <= A and B;
+	
 
-	with S select -- "MUX" de 8 a 1
+	with S select
 		F <= "0000" when "000",
 			BminusA when "001",
 			AminusB when "010",
