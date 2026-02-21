@@ -14,10 +14,11 @@ architecture behavior of FullAdder is
             S, Co: out std_logic);
     end component;
 
-    signal C: std_logic_vector(2 downto 0);
+    signal  S1, C1, C2: std_logic;
 
 begin
-    I0: HalfAdder port map (A,B,C(2), C(1));
-    I1: HalfAdder port map (C(2), Cin, S, C(0));
-    Co <= C(1) or C(2);
+    I0: HalfAdder port map (A=>A, B=>B,S=>S1, Co=>C1);
+    I1: HalfAdder port map (A=>S1, B=>Cin, S=>S, Co=>C2);
+    Co <= C1 or C2;
+    
 end behavior;

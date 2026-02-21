@@ -13,7 +13,7 @@ entity ALU is
 end ALU;
 
 architecture behavior of ALU is
-	component SumRes is
+	component SumRes4 is
 		port(
 			A,B: in std_logic_vector(3 downto 0);
 			M: in std_logic;
@@ -33,9 +33,9 @@ architecture behavior of ALU is
 
 begin
 	Snew <= not S(2) & S(1 downto 0);
-	RestUno: SumRes port map(A=>B, B=>A, M=>'1', S=>BminusA, Co=>CarryRestUno);
-	RestDos: SumRes port map(B=>B, A=>A, M=>'1', S=>AminusB, Co=>CarryRestDos);
-	SumaUno: SumRes port map(A=>A, B=>B, M=>'0', S=>AplusB, Co=>CarrySum);
+	RestUno: SumRes4 port map(A=>B, B=>A, M=>'1', S=>BminusA, Co=>CarryRestUno);
+	RestDos: SumRes4 port map(B=>B, A=>A, M=>'1', S=>AminusB, Co=>CarryRestDos);
+	SumaUno: SumRes4 port map(A=>A, B=>B, M=>'0', S=>AplusB, Co=>CarrySum);
 	AxorB <= A xor B;
 	AorB <= A or B;
 	AandB <= A and B;
