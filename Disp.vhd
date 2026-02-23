@@ -32,7 +32,7 @@ architecture behavior of Disp is
         );
     end component;
 
-    component SumRes is
+    component SumRes5 is
         port(
             A,B:in std_logic_vector(4 downto 0);
             M:in std_logic;
@@ -60,7 +60,7 @@ architecture behavior of Disp is
     signal Co_abs : std_logic_vector(4 downto 0);
     signal absF : std_logic_vector(3 downto 0);
 
-    signal V : std_logic_vector(4 downto 0) -- necesitamos 5 bits para una suma como 15 + 15
+    signal V : std_logic_vector(4 downto 0); -- necesitamos 5 bits para una suma como 15 + 15
 
     -- señales comparativas para pasar a decimal
     signal V10, V20, V30 : std_logic_vector(4 downto 0);
@@ -103,9 +103,9 @@ begin
     -- suma => V = Co + F
     -- resta => V = 0 + absF
     V <= (Co & F) when (is_sum = '1') else ('0' & newF);
-    R10: SumRes port map(A=>V, B=>"01010", M=>'1', S=>V10, Co=>C10); -- V - 10
-    R20: SumRes port map(A=>V, B=>"10100", M=>'1', S=>V20, Co=>C20); -- V - 20
-    R30: SumRes port map(A=>V, B=>"11110", M=>'1', S=>V30, Co=>C30); -- V - 30
+    R10: SumRes5 port map(A=>V, B=>"01010", M=>'1', S=>V10, Co=>C10); -- V - 10
+    R20: SumRes5 port map(A=>V, B=>"10100", M=>'1', S=>V20, Co=>C20); -- V - 20
+    R30: SumRes5 port map(A=>V, B=>"11110", M=>'1', S=>V30, Co=>C30); -- V - 30
     -- si Co = 1 => A > B
     -- si Co = 0 => A < B
     process(V, V10, V20, V30, C10, C20, C30)

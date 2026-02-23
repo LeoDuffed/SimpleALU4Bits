@@ -3,16 +3,16 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity SumRes is
+entity SumRes5 is
     port( 
         A,B: in std_logic_vector(4 downto 0);
 		M: in std_logic;
         S: out std_logic_vector(4 downto 0);
         Co: out std_logic
     );
-end SumRes;
+end SumRes5;
 
-architecture behavior of SumRes is
+architecture behavior of SumRes5 is
 
     component FullAdder is
         port( 
