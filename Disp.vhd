@@ -103,6 +103,7 @@ begin
     -- suma => V = Co + F
     -- resta => V = 0 + absF
     V <= (Co & F) when (is_sum = '1') else ('0' & newF);
+    
     R10: SumRes5 port map(A=>V, B=>"01010", M=>'1', S=>V10, Co=>C10); -- V - 10
     R20: SumRes5 port map(A=>V, B=>"10100", M=>'1', S=>V20, Co=>C20); -- V - 20
     R30: SumRes5 port map(A=>V, B=>"11110", M=>'1', S=>V30, Co=>C30); -- V - 30
